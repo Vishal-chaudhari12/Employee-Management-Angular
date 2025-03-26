@@ -1,0 +1,122 @@
+<div class="container my-5">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold text-primary">Employee Leave Management</h2>
+  </div>
+
+  <div class="row">
+    <!-- Leave Request Form -->
+    <div class="col-md-4">
+      <div class="card p-4 shadow-sm border-0 rounded-4">
+        <h4 class="text-center text-secondary">Request Leave</h4>
+
+        <form (ngSubmit)="submitLeaveRequest()">
+          <div class="mb-3">
+            <label class="fw-medium">Email</label>
+            <input type="email" class="form-control" [(ngModel)]="newLeaveRequest.email" name="email" readonly />
+          </div>
+
+          <div class="mb-3">
+            <label class="fw-medium">Leave Type</label>
+            <select class="form-select" [(ngModel)]="newLeaveRequest.type" name="type" required>
+              <option *ngFor="let type of leaveTypes" [value]="type">{{ type }}</option>
+            </select>
+          </div>
+          
+          <div class="mb-3">
+            <label class="fw-medium">Reason</label>
+            <textarea class="form-control" [(ngModel)]="newLeaveRequest.reason" name="reason" rows="3" required></textarea>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <label class="fw-medium">From Date</label>
+              <input type="date" class="form-control" [(ngModel)]="newLeaveRequest.fromDate" name="fromDate" required />
+            </div>
+            <div class="col-md-6">
+              <label class="fw-medium">To Date</label>
+              <input type="date" class="form-control" [(ngModel)]="newLeaveRequest.toDate" name="toDate" required />
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100 mt-3 shadow-sm">
+            Submit Leave Request
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Leave Statistics & History -->
+    <div class="col-md-8">
+      <div class="card p-4 shadow-sm border-0 rounded-4">
+        <h4 class="text-center text-secondary"><i class="fa-solid fa-calendar-check me-2"></i> Leave History</h4>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <input type="text" class="form-control me-2" [(ngModel)]="searchQuery" placeholder="Search leave type or status..." />
+          <select class="form-select w-50" [(ngModel)]="statusFilter">
+            <option value="">All Statuses</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+
+        <!-- Dashboard Stats -->
+        <div class="row text-center mb-3">
+          <div class="col-md-4">
+            <div class="card stat-card bg-light">
+              <h6 class="fw-semibold">Total Leaves</h6>
+              <p class="fw-bold text-primary fs-5">{{ totalLeaves }}</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card stat-card bg-light">
+              <h6 class="fw-semibold">Approved Leaves</h6>
+              <p class="fw-bold text-success fs-5">{{ approvedLeaves }}</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card stat-card bg-light">
+              <h6 class="fw-semibold">Remaining Leaves</h6>
+              <p class="fw-bold text-danger fs-5">{{ remainingLeaves }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Leave History Table -->
+        <div class="table-responsive">
+          <table class="table table-hover text-center align-middle">
+            <thead class="table-dark">
+              <tr>
+                <th (click)="sortBy('type')">Leave Type</th>
+                <th>Reason</th>
+                <th (click)="sortBy('fromDate')">From</th>
+                <th (click)="sortBy('toDate')">To</th>
+                <th (click)="sortBy('status')">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let leave of filteredLeaveRequests()">
+                <td class="fw-semibold">{{ leave.type }}</td>
+                <td class="text-muted">{{ leave.reason }}</td>
+                <td>{{ leave.fromDate | date }}</td>
+                <td>{{ leave.toDate | date }}</td>
+                <td>
+                  <span class="badge" [ngClass]="{
+                    'bg-warning': leave.status === 'pending',
+                    'bg-success': leave.status === 'approved',
+                    'bg-danger': leave.status === 'rejected'
+                  }">
+                    {{ leave.status }}
+                  </span>
+                </td>
+              </tr>
+              <tr *ngIf="filteredLeaveRequests().length === 0">
+                <td colspan="5" class="text-center text-muted">No leave requests found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

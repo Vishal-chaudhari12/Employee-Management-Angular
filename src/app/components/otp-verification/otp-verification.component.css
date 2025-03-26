@@ -1,0 +1,86 @@
+.otp-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .otp-container h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .otp-container p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 15px;
+  }
+  
+  .otp-container strong {
+    color: #007bff;
+  }
+  
+  .otp-input {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  
+  .otp-input input {
+    width: 100%;
+    max-width: 200px;
+    padding: 10px;
+    font-size: 18px;
+    text-align: center;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+  }
+  
+  .otp-input input:focus {
+    border-color: #007bff;
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+  
+  button:hover:not(:disabled) {
+    background: #0056b3;
+  }
+  
+  .error {
+    color: #d9534f;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  p a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  p a:hover {
+    text-decoration: underline;
+  }
+  

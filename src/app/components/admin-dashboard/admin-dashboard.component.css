@@ -1,0 +1,96 @@
+/* ============================== */
+/*         GENERAL LAYOUT         */
+/* ============================== */
+
+.dashboard-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f4f7fc;
+  font-family: 'Arial', sans-serif;
+}
+
+.content {
+  text-align: center;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 50%;
+}
+
+.content h2 {
+  font-size: 26px;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+/* ============================== */
+/*          ACTION BUTTONS        */
+/* ============================== */
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.actions a,
+.actions button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.actions a mat-icon,
+.actions button mat-icon {
+  font-size: 20px;
+}
+
+/* Button Colors */
+.actions a[color="primary"],
+.actions button[color="primary"] {
+  background: #007bff;
+  color: white;
+}
+
+.actions a[color="accent"],
+.actions button[color="accent"] {
+  background: #17a2b8;
+  color: white;
+}
+
+.actions a[color="warn"],
+.actions button[color="warn"] {
+  background: #dc3545;
+  color: white;
+}
+
+/* Hover Effects */
+.actions a:hover,
+.actions button:hover {
+  opacity: 0.9;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .content {
+    width: 80%;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

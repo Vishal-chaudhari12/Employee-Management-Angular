@@ -1,0 +1,84 @@
+<div class="container mt-4">
+  <div class="text-center mb-3">
+    <button class="btn btn-success" (click)="getEmployees()">List Employees</button>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover text-center">
+      <thead class="table-dark">
+        <tr>
+          <th>Sr.No</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>DOB</th>
+          <th>Joining Date</th>
+          <th>View Documents</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of employeeList; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.email }}</td>
+          <td>{{ item.dob }}</td>
+          <td>{{ item.joiningDate }}</td>
+<!-- 
+          <td>
+            <button *ngIf="item.marksheetUrl" class="btn btn-info btn-sm" (click)="viewDocument(item.marksheetUrl)">
+              <i class="bi bi-eye"></i> Marksheet
+            </button>
+            <button *ngIf="item.resumeUrl" class="btn btn-warning btn-sm" (click)="viewDocument(item.resumeUrl)">
+              <i class="bi bi-eye"></i> Resume
+            </button>
+          </td> -->
+
+          <td>
+            <button class="btn btn-primary btn-sm me-1" (click)="onEdit(item)">
+              <i class="bi bi-pencil"></i> Edit
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="onDelete(item._id)">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+            <button class="btn btn-secondary btn-sm" (click)="viewEmployeeDetails(item)" data-bs-toggle="modal" data-bs-target="#employeeDetailsModal">
+              <i class="bi bi-eye"></i> View Details
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Employee Details Modal -->
+<div class="modal fade" id="employeeDetailsModal" tabindex="-1" aria-labelledby="employeeDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="employeeDetailsModalLabel">Employee Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="selectedEmployee">
+        <p><strong>Name:</strong> {{ selectedEmployee.name }}</p>
+        <p><strong>Email:</strong> {{ selectedEmployee.email }}</p>
+        <p><strong>Phone:</strong> {{ selectedEmployee.mobNo }}</p>
+        <p><strong>Address:</strong> {{ selectedEmployee.address }}</p>
+        <p><strong>Department:</strong> {{ selectedEmployee.deptName }}</p>
+        <p><strong>Graduation:</strong> {{ selectedEmployee.graduation }}</p>
+        <p><strong>Designation:</strong> {{ selectedEmployee.designation }}</p>
+        <p><strong>Salary:</strong> {{ selectedEmployee.salary }}</p>
+        <p><strong>Joining Date:</strong> {{ selectedEmployee.joiningDate }}</p>
+
+        <p *ngIf="selectedEmployee.marksheetUrl">
+          <strong>Marksheet:</strong> 
+          <a [href]="selectedEmployee.marksheetUrl" target="_blank">View Marksheet</a>
+        </p>
+        <p *ngIf="selectedEmployee.resumeUrl">
+          <strong>Resume:</strong> 
+          <a [href]="selectedEmployee.resumeUrl" target="_blank">View Resume</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+

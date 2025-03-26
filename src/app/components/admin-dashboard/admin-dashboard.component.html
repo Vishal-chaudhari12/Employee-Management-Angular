@@ -1,0 +1,23 @@
+
+    <div class="dashboard-container">
+      <app-side-bar></app-side-bar>
+      <div class="content">
+        <h2>Welcome, Admin</h2>
+    
+        <!-- Action Buttons -->
+        <div class="actions">
+          <a mat-raised-button color="primary" [routerLink]="['/add-employee']">
+            <mat-icon>person_add</mat-icon> Add New Employee
+          </a>
+    
+          <button mat-raised-button color="accent" [routerLink]="['/employee-list']">
+            <mat-icon>group</mat-icon> View Employees
+          </button>
+    
+          <button mat-raised-button color="warn" [routerLink]="['/leave-employee']">
+            <mat-icon>event</mat-icon> Manage Leaves
+          </button>
+        </div>
+      </div>
+    </div>
+    
