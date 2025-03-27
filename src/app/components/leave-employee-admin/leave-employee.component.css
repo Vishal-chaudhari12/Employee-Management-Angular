@@ -1,129 +1,157 @@
-/* 🌟 Main Container (Smaller Size) */
+/* General container styling */
 .leave-container {
-  display: flex;
-  height: 90vh; /* Reduce height */
-  background-color: #f4f6f9;
-  padding: 10px; /* Reduce padding */
-  gap: 10px;
-}
-
-/* 🌟 Sidebar Styling */
-.sidebar {
-  width: 200px; /* Make sidebar smaller */
-  background: #2c3e50;
-  color: white;
-  padding: 15px;
-  border-radius: 8px;
-}
-
-/* 🌟 Content Area */
-.content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-}
-
-/* 🌟 Card Styling */
-.leave-card {
-  width: 100%;
-  max-width: 800px; /* Reduce width */
-  background: white;
-  padding: 15px; /* Reduce padding */
-  border-radius: 10px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* 🌟 Page Title */
-.page-title {
-  font-size: 18px; /* Reduce font size */
-  font-weight: bold;
-  color: #2c3e50;
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-/* 🌟 Search Filter */
-.filter-input {
-  width: 100%;
-  max-width: 300px; /* Reduce width */
-  margin-bottom: 10px;
-}
-
-/* 🌟 Loading Spinner */
-.loading-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80px; /* Reduce height */
+  padding: 20px;
+  width: calc(100% - 250px); /* Adjust width dynamically */
+  min-height: 100vh;
+  margin-left: 250px; /* Same as sidebar width */
+  transition: margin-left 0.3s ease-in-out;
+  background-color: #f8f9fc; /* Light modern background */
 }
 
-/* 🌟 Table Styling (Smaller Size) */
-table {
-  width: 100%;
-  border-collapse: collapse;
+/* Responsive Fix */
+@media (max-width: 900px) {
+  .leave-container {
+    width: 100%;
+    margin-left: 0; /* Full width when sidebar is hidden */
+  }
+}
+
+/* Card Styling */
+.leave-card {
+  width: 90%;
+  max-width: 1100px;
   background: white;
-  border-radius: 8px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  overflow: hidden;
 }
 
-th {
-  background: #2980b9;
-  color: rgb(25, 14, 14);
-  padding: 8px; /* Reduce padding */
-  text-align: left;
-  font-size: 12px; /* Reduce font size */
+/* Search & Export Button */
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
-td {
-  padding: 6px; /* Reduce padding */
-  border-bottom: 1px solid #ddd;
-  font-size: 12px; /* Reduce font size */
-  color: #555;
+mat-form-field {
+  width: 60%;
 }
 
-tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-/* 🌟 Hover Effect */
-tr:hover {
-  background: #eaf2ff;
+.download-btn {
+  background-color: #0056b3;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
   transition: 0.3s;
 }
 
-/* 🌟 Status Chips (Smaller) */
+.download-btn:hover {
+  background-color: #003f7f;
+}
+
+/* Table Styling */
+.table-container {
+  overflow-x: auto;
+}
+
+.custom-table {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+}
+
+th {
+  background: #0056b3;
+  color: white;
+  text-align: left;
+  padding: 10px;
+}
+
+td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+tr:hover {
+  background: #f1f1f1;
+}
+
+/* Status Badge */
 .status-chip {
-  padding: 4px 8px; /* Reduce size */
-  border-radius: 4px;
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 10px; /* Reduce font size */
-  display: inline-block;
-  width: 70px; /* Reduce width */
-  text-align: center;
 }
 
-/* 🌟 Button Styling (Smaller) */
-button {
-  cursor: pointer;
-  padding: 6px 10px; /* Reduce padding */
+.status-chip.PENDING {
+  background: #ffb300;
+  color: white;
+}
+
+.status-chip.APPROVED {
+  background: #28a745;
+  color: white;
+}
+
+.status-chip.REJECTED {
+  background: #dc3545;
+  color: white;
+}
+
+/* Buttons */
+.approve-btn, .reject-btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
   border: none;
-  border-radius: 4px;
-  font-size: 12px; /* Reduce font size */
-  transition: all 0.3s ease;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-button[color="primary"] {
-  background: #27ae60;
+.approve-btn {
+  background: #007bff;
   color: white;
 }
 
-button[color="warn"] {
-  background: #e74c3c;
-  color: white;
+.approve-btn:hover {
+  background: #0056b3;
 }
 
-button:hover {
-  opacity: 0.8;
+.reject-btn {
+  background: #dc3545;
+  color: white;
+  margin-left: 5px;
+}
+
+.reject-btn:hover {
+  background: #a71d2a;
+}
+
+/* Fix Sidebar Overlapping */
+.sidebar {
+  width: 250px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: #007bff;
+  padding: 20px;
+  transition: 0.3s;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 0;
+    padding: 0;
+  }
 }

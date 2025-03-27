@@ -13,7 +13,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
-import { SideBarComponent } from "../side-bar/side-bar.component";
 
 interface LeaveRequest {
   _id: string;
@@ -38,7 +37,7 @@ interface LeaveRequest {
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    SideBarComponent
+    
 ],
 })
 export class LeaveComponent implements OnInit {
