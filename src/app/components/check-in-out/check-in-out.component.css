@@ -1,14 +1,9 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  max-width: 1200px;
+  margin: auto;
 }
 
 /* Work History Section */
-.work-history {
-  margin-top: 20px;
-}
-
 .card {
   background: #ffffff;
   padding: 20px;
@@ -16,40 +11,49 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.user-info {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.button-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
-
-.btn {
-  padding: 10px 16px;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 8px;
-}
-
-.current-duration span {
-  font-size: 18px;
+/* Styling for time display */
+.time-display {
+  font-size: 22px;
   font-weight: bold;
   color: #007bff;
+  animation: fadeIn 1s ease-in-out infinite alternate;
 }
 
-.hours-text {
-  font-size: 24px;
-  font-weight: bold;
-  color: #007bff;
+@keyframes fadeIn {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
+/* Stop Button */
+.stop-btn {
+  color: rgb(191, 138, 241);
+  background-color: transparent;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 2px solid blueviolet;
+  margin: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.stop-btn:hover {
+  background-color: blueviolet;
+  color: white;
+  transform: scale(1.1);
+}
+
+.stop-btn:active {
+  transform: scale(0.9);
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  .col-lg-4,
-  .col-lg-8 {
+  .col-lg-6 {
     width: 100%;
   }
 
