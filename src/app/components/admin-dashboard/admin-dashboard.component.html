@@ -17,15 +17,15 @@
           <mat-icon>group</mat-icon>
           <mat-card-title>Total Employees</mat-card-title>
         </mat-card-header>
-        <!-- <mat-card-content>256</mat-card-content> -->
+        <mat-card-content>{{ employeeList.length }}</mat-card-content>
       </mat-card>
 
       <mat-card class="stat-card">
         <mat-card-header>
           <mat-icon>event_busy</mat-icon>
-          <mat-card-title>Pending Leaves</mat-card-title>
+          <mat-card-title>All Leaves</mat-card-title>
         </mat-card-header>
-        <!-- <mat-card-content>12</mat-card-content> -->
+        <mat-card-content>{{ allLeaveRequests.length }}</mat-card-content>
       </mat-card>
     </div>
 
