@@ -164,16 +164,23 @@ isCheckedIn: boolean = false;
             const checkInTime = new Date(record.checkInTime);
             const checkOutTime = record.checkOutTime ? new Date(record.checkOutTime) : null;
   
-            let duration;
+            let duration:number;
             if (checkOutTime) {
-              duration = this.formatTime(this.elapsedTime);
-            } else if (this.isCheckedIn) {
+              duration = checkOutTime.getTime() - checkInTime.getTime();
+            } else (this.isCheckedIn) 
+            {
               // Calculate ongoing work duration
               duration = new Date().getTime() - checkInTime.getTime();
-            } else {
-              duration = 0;
             }
   
+            // Adjust duration for paused time
+            if (record.pauseTimes && record.pauseTimes.length > 0) {
+              record.pauseTimes.forEach((pause: any) => {
+                const pauseStart = new Date(pause.start);
+                const pauseEnd = new Date(pause.end);
+                duration -= (pauseEnd.getTime() - pauseStart.getTime());
+              });
+            }
             return {
               date: checkInTime.toISOString().split('T')[0],
               checkInTime,
