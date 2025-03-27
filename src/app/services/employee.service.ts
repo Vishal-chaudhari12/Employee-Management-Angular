@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -19,8 +19,10 @@ export class EmployeeService {
       }
     });
 
-    return this.http.post<any>(this.apiUrl, formData);
-  }
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('authToken')}`  // 🔹 Ensure token is included
+    });
 
-  
+    return this.http.post<any>(this.apiUrl, formData, { headers });
+  }
 }

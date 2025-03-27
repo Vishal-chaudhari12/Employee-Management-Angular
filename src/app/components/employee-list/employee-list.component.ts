@@ -21,7 +21,7 @@ export class EmployeeListComponent {
     console.log("Fetching employees...");
 
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
+      'Authorization': `Bearer ${localStorage.getItem('authToken')}`
     });
 
     this.http.get<any[]>('http://localhost:3000/employee', { headers }).subscribe(
@@ -68,9 +68,15 @@ export class EmployeeListComponent {
       cancelButtonText: 'Cancel',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.http.delete(`http://localhost:3000/employee/${employeeId}`).subscribe(() => {
+        const headers = {
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}` // 🔹 Send auth token
+        };
+  
+        this.http.delete(`http://localhost:3000/employee/${employeeId}`, { headers }).subscribe(() => {
           Swal.fire('Deleted!', 'Employee has been deleted.', 'success');
           this.getEmployees();
+        }, (error) => {
+          Swal.fire('Error!', 'Failed to delete employee.', 'error');
         });
       }
     });
