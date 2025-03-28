@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { MatIcon } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
@@ -15,12 +15,16 @@ import { MatCardModule } from '@angular/material/card';
 })
 export class AdminDashboardComponent implements OnInit {
   allLeaveRequests: any[] = [];
+  employeeList: any[] = [];
+  selectedEmployee: any = null;
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
     this.fetchLeaveRequests();
+    this.getEmployees();
   }
+
 
   fetchLeaveRequests() {
     this.http.get<any[]>('http://localhost:3000/api/leave/all').subscribe({
@@ -59,6 +63,31 @@ export class AdminDashboardComponent implements OnInit {
         );
       }
     });
+  }
+  
+  getEmployees() {
+    console.log("Fetching employees...");
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+    });
+
+    this.http.get<any[]>('http://localhost:3000/employee', { headers }).subscribe(
+      (result) => {
+        console.log("Employee data:", result);
+        this.employeeList = result;
+        this.employeeList = result.map(employee => ({
+          ...employee, 
+          
+          marksheetUrl: employee.marksheet ? 
+          `http://localhost:3000/uploads/${employee.marksheet}` : null,
+          resumeUrl: employee.resume ? `http://localhost:3000/uploads/${employee.resume}` : null
+        }));
+      },
+      (error) => {
+        console.error("Error fetching employees:", error);
+      }
+    );
   }
 }
 

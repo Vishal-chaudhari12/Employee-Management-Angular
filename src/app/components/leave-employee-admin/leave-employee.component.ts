@@ -13,6 +13,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { SideBarComponent } from "../side-bar/side-bar.component";
 
 interface LeaveRequest {
   _id: string;
@@ -37,7 +38,7 @@ interface LeaveRequest {
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    
+    SideBarComponent
 ],
 })
 export class LeaveComponent implements OnInit {
@@ -109,8 +110,8 @@ export class LeaveComponent implements OnInit {
   }
 
   updateLeaveStatus(leaveId: string, status: string): void {
-  this.http.put(`http://localhost:3000/api/leave/update/${leaveId}`, { status }).subscribe(
-    (response: any) => {
+  this.http.put(`http://localhost:3000/api/leave/update/${leaveId}`, { status }).subscribe({
+    next: (response: any) => {
       this.snackBar.open(`Leave marked as ${status}`, 'Close', { duration: 3000 });
 
       // Find and update the leave status in the local data
@@ -122,11 +123,11 @@ export class LeaveComponent implements OnInit {
 
       this.getLeaveRequests(); // Fetch updated data
     },
-    (error) => {
+    error: (error: any) => {
       console.error('Error updating leave:', error);
       Swal.fire('Error', 'Failed to update leave status', 'error');
     }
-  );
+  });
 }
 
 
