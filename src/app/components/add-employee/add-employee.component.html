@@ -1,136 +1,182 @@
 <div class="container mt-4">
-  <app-side-bar></app-side-bar> 
-  <h5 class="text-center mb-4">Employee Register</h5>
-  <form>
-    <div class="row">
-      <!-- Row 1 -->
-      <div class="col-md-6 mb-3">
-        <input
-          type="text"
-          [(ngModel)]="employee.name"
-          name="name"
-          placeholder="Name"
-          class="form-control"
-        >
-      </div>
-      <div class="col-md-6 mb-3">
-        <input
-          type="email"
-          [(ngModel)]="employee.email"
-          name="email"
-          placeholder="Email"
-          class="form-control"
-        >
-      </div>
-
-      <!-- Row 2 -->
-      <div class="col-md-6 mb-3">
-        <input
-          type="number"
-          [(ngModel)]="employee.mobNo"
-          name="mobNo"
-          placeholder="Mobile No"
-          class="form-control"
-        >
-      </div>
-      <div class="col-md-6 mb-3">
-        <input
-          type="text"
-          [(ngModel)]="employee.deptName"
-          name="deptName"
-          placeholder="Department Name"
-          class="form-control"
-        >
-      </div>
-
-      <!-- Row 3 -->
-      <div class="col-md-12 mb-3">
-        <input
-          type="text"
-          [(ngModel)]="employee.address"
-          name="address"
-          placeholder="Address"
-          class="form-control"
-        >
-      </div>
-
-      <!-- Row 4 -->
-      <div class="col-md-6 mb-3">
-        <label for="dob">DOB</label>
-        <input
-          type="date"
-          [(ngModel)]="employee.dob"
-          name="dob"
-          id="dob"
-          class="form-control"
-        >
-      </div>
-      <div class="col-md-6 mb-3">
-        <input
-          type="text"
-          [(ngModel)]="employee.graduation"
-          name="graduation"
-          placeholder="Graduation"
-          class="form-control"
-        >
-      </div>
-
-      <!-- Row 5 -->
-      <div class="col-md-6 mb-3">
-        <input
-          type="text"
-          [(ngModel)]="employee.designation"
-          name="designation"
-          placeholder="Designation"
-          class="form-control"
-        >
-      </div>
-      <div class="col-md-6 mb-3">
-        <input
-          type="text"
-          [(ngModel)]="employee.salary"
-          name="salary"
-          placeholder="Salary"
-          class="form-control"
-        >
-      </div>
-
-      <!-- Row 6 -->
-      <div class="col-md-6 mb-3">
-        <label for="joiningDate">Joining Date</label>
-        <input
-          type="date"
-          [(ngModel)]="employee.joiningDate"
-          name="joiningDate"
-          id="joiningDate"
-          class="form-control"
-        >
-      </div>
-
-      <!-- Row 7: File Uploads -->
-      <div class="col-md-6 mb-3">
-        <label for="marksheet">SSC Marksheet</label>
-        <input
-          type="file"
-          (change)="onFileSelected($event, 'marksheet')"
-          id="marksheet"
-          class="form-control"
-        >
-      </div>
-      <div class="col-md-6 mb-3">
-        <label for="resume">Resume</label>
-        <input
-          type="file"
-          (change)="onFileSelected($event, 'resume')"
-          id="resume"
-          class="form-control"
-        >
-      </div>
+  <div class="card shadow">
+    <div class="card-header text-white">
+      <h5 class="text-center mb-0 py-3">Employee Register</h5>
     </div>
-    <div class="text-center">
-      <button (click)="onSaveEmployee()" type="button" class="btn btn-primary">
-        Add Employee
-      </button>
+    <div class="card-body">
+      <form>
+        <div class="row g-4">
+          <!-- Row 1 -->
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input
+                type="text"
+                [(ngModel)]="employee.name"
+                name="name"
+                placeholder="Name"
+                class="form-control"
+                id="nameInput"
+              >
+              <label for="nameInput">Name</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input
+                type="email"
+                [(ngModel)]="employee.email"
+                name="email"
+                placeholder="Email"
+                class="form-control"
+                id="emailInput"
+              >
+              <label for="emailInput">Email</label>
+            </div>
+          </div>
+
+          <!-- Row 2 -->
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input
+                type="number"
+                [(ngModel)]="employee.mobNo"
+                name="mobNo"
+                placeholder="Mobile No"
+                class="form-control"
+                id="mobNoInput"
+              >
+              <label for="mobNoInput">Mobile No</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input
+                type="text"
+                [(ngModel)]="employee.deptName"
+                name="deptName"
+                placeholder="Department Name"
+                class="form-control"
+                id="deptInput"
+              >
+              <label for="deptInput">Department Name</label>
+            </div>
+          </div>
+
+          <!-- Row 3 -->
+          <div class="col-12">
+            <div class="form-floating">
+              <input
+                type="text"
+                [(ngModel)]="employee.address"
+                name="address"
+                placeholder="Address"
+                class="form-control"
+                id="addressInput"
+              >
+              <label for="addressInput">Address</label>
+            </div>
+          </div>
+
+          <!-- Row 4 -->
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input
+                type="date"
+                [(ngModel)]="employee.dob"
+                name="dob"
+                class="form-control"
+                id="dobInput"
+              >
+              <label for="dobInput">Date of Birth</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input
+                type="text"
+                [(ngModel)]="employee.graduation"
+                name="graduation"
+                placeholder="Graduation"
+                class="form-control"
+                id="gradInput"
+              >
+              <label for="gradInput">Graduation</label>
+            </div>
+          </div>
+
+          <!-- Row 5 -->
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input
+                type="text"
+                [(ngModel)]="employee.designation"
+                name="designation"
+                placeholder="Designation"
+                class="form-control"
+                id="designationInput"
+              >
+              <label for="designationInput">Designation</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input
+                type="text"
+                [(ngModel)]="employee.salary"
+                name="salary"
+                placeholder="Salary"
+                class="form-control"
+                id="salaryInput"
+              >
+              <label for="salaryInput">Salary</label>
+            </div>
+          </div>
+
+          <!-- Row 6 -->
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input
+                type="date"
+                [(ngModel)]="employee.joiningDate"
+                name="joiningDate"
+                class="form-control"
+                id="joiningDateInput"
+              >
+              <label for="joiningDateInput">Joining Date</label>
+            </div>
+          </div>
+
+          <!-- Row 7: File Uploads -->
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input
+                type="file"
+                (change)="onFileSelected($event, 'marksheet')"
+                class="form-control"
+                id="marksheetInput"
+              >
+              <label for="marksheetInput">SSC Marksheet</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input
+                type="file"
+                (change)="onFileSelected($event, 'resume')"
+                class="form-control"
+                id="resumeInput"
+              >
+              <label for="resumeInput">Resume</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <button (click)="onSaveEmployee()" type="button" class="btn btn-primary btn-lg px-5">
+            <i class="fas fa-save me-2"></i>Add Employee
+          </button>
+        </div>
+      </form>
     </div>
-  </form>
+  </div>
 </div>
