@@ -182,7 +182,7 @@ export const routes: Routes = [
     {
        path:'leave-employee',
        component:LeaveComponent,
-    //    canActivate: [authGaurd]
+    
     },
     {
         path:'employee-leave-form',
@@ -204,10 +204,7 @@ export const routes: Routes = [
         component:ResetPasswordComponent,
     },
 
-    // { 
-    //  path: '', 
-    //  redirectTo: 'forgot-password'
-    // },
+ 
     {
         path:'otp-verification',
         component:OtpVerificationComponent,
