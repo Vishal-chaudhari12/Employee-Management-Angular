@@ -1,126 +1,92 @@
-/* 🌟 Main Container (Smaller Size) */
-.leave-container {
-  display: flex;
-  height: 90vh; /* Reduce height */
-  background-color: #f4f6f9;
-  padding: 10px; /* Reduce padding */
-  gap: 10px;
+/* Card Styling */
+mat-card {
+  padding: 24px;
+  margin: 30px auto;
+  max-width: 1000px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  background: #ffffff;
 }
 
-/* 🌟 Sidebar Styling */
-.sidebar {
-  width: 200px; /* Make sidebar smaller */
-  background: #2c3e50;
-  color: white;
-  padding: 15px;
-  border-radius: 8px;
-}
-
-/* 🌟 Content Area */
-.content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-}
-
-/* 🌟 Card Styling */
-.leave-card {
-  width: 100%;
-  max-width: 800px; /* Reduce width */
-  background: white;
-  padding: 15px; /* Reduce padding */
-  border-radius: 10px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* 🌟 Page Title */
-.page-title {
-  font-size: 18px; /* Reduce font size */
-  font-weight: bold;
-  color: #2c3e50;
+/* Heading */
+h2 {
   text-align: center;
-  margin-bottom: 15px;
+  color: #333;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
 
-/* 🌟 Search Filter */
-.filter-input {
+/* Full-width form field */
+.full-width {
   width: 100%;
-  max-width: 300px; /* Reduce width */
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
-/* 🌟 Loading Spinner */
+/* Loading spinner */
 .loading-container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 80px; /* Reduce height */
+  margin: 20px 0;
 }
 
-/* 🌟 Table Styling (Smaller Size) */
+/* Table Styling */
 table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
   border-radius: 8px;
+  overflow: hidden;
 }
 
 th {
-  background: #2980b9;
-  color: rgb(25, 14, 14);
-  padding: 8px; /* Reduce padding */
+  background: #007BFF;
+  color: white;
+  font-weight: bold;
+  padding: 12px;
   text-align: left;
-  font-size: 12px; /* Reduce font size */
 }
 
 td {
-  padding: 6px; /* Reduce padding */
-  border-bottom: 1px solid #ddd;
-  font-size: 12px; /* Reduce font size */
-  color: #555;
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
 }
 
+/* Alternating Row Colors */
 tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-/* 🌟 Hover Effect */
-tr:hover {
-  background: #eaf2ff;
+/* Status Styling */
+.status-pending {
+  color: #ff9800;
+  font-weight: bold;
+}
+
+.status-approved {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.status-rejected {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+/* Actions Buttons */
+button {
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 6px;
   transition: 0.3s;
 }
 
-/* 🌟 Status Chips (Smaller) */
-.status-chip {
-  padding: 4px 8px; /* Reduce size */
-  border-radius: 4px;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 10px; /* Reduce font size */
-  display: inline-block;
-  width: 70px; /* Reduce width */
-  text-align: center;
-}
-
-/* 🌟 Button Styling (Smaller) */
-button {
-  cursor: pointer;
-  padding: 6px 10px; /* Reduce padding */
-  border: none;
-  border-radius: 4px;
-  font-size: 12px; /* Reduce font size */
-  transition: all 0.3s ease;
-}
-
 button[color="primary"] {
-  background: #27ae60;
+  background: #28a745;
   color: white;
 }
 
 button[color="warn"] {
-  background: #e74c3c;
+  background: #dc3545;
   color: white;
 }
 
