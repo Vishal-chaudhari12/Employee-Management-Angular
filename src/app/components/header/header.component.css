@@ -4,10 +4,10 @@
   align-items: center;
   justify-content: space-between;
   padding: 12px 20px;
-  background: linear-gradient(135deg, #7e93fe, #6170f1 100%);
+  background: linear-gradient(135deg, #1e90ff, #0066cc 100%);
   color: white;
   font-family: 'Arial', sans-serif;
-  box-shadow: 0px 3px 15px rgba(139, 92, 246, 0.2);
+  box-shadow: 0px 3px 15px rgba(30, 144, 255, 0.2);
   position: sticky;
   top: 0;
   width: 100%;
@@ -69,7 +69,7 @@
 .sidebar {
   width: 70px;
   height: 100vh;
-  background: linear-gradient(135deg, #7e93fe, #6170f1 100%);
+  background: linear-gradient(135deg, #1e90ff, #0066cc 100%);
   color: white;
   position: fixed;
   left: 0;
@@ -81,7 +81,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 4px 0 15px rgba(139, 92, 246, 0.2);
+  box-shadow: 4px 0 15px rgba(30, 144, 255, 0.2);
 }
 
 .sidebar.open {

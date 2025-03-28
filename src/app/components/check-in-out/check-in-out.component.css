@@ -1,5 +1,6 @@
 /* Container Styling */
 .container {
+  /* margin-top: 10%; */
   max-width: 1200px;
   margin: auto;
   display: flex;

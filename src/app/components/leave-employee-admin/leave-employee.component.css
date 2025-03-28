@@ -91,5 +91,45 @@ button[color="warn"] {
 }
 
 button:hover {
-  opacity: 0.8;
+  opacity: 0.85;
+}
+
+/* No Data Message */
+.no-data {
+  text-align: center;
+  font-style: italic;
+  color: #757575;
+}
+
+/* Export Button */
+.export-btn {
+  display: block;
+  margin: 20px auto;
+  background: #007BFF;
+  color: white;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.export-btn:hover {
+  background: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  mat-card {
+    padding: 15px;
+  }
+  
+  th, td {
+    font-size: 14px;
+    padding: 8px;
+  }
+  
+  button {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
 }

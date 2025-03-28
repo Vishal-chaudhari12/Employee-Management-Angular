@@ -149,7 +149,7 @@ export class AuthService {
   
 
   get isLoggedIn(): boolean {
-    return typeof window !== 'undefined' && localStorage.getItem('authToken') !== null;
+    return localStorage.getItem('authToken') !== null;
   }
 
   get isAdmin (): boolean {

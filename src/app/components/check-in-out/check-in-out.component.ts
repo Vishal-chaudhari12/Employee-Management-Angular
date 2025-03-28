@@ -35,6 +35,7 @@ isCheckedIn: boolean = false;
   workRecords: WorkRecord[] = [];
   showTotalHoursView: boolean = false;
   totalWorkingHours: number = 0;
+  todayWorkingHours: number = 0;
   selectedMonth: string = '';
   months: string[] = [];
   filteredWorkRecords: WorkRecord[] = [];
@@ -163,14 +164,14 @@ isCheckedIn: boolean = false;
           this.workRecords = res.history.map((record: any) => {
             const checkInTime = new Date(record.checkInTime);
             const checkOutTime = record.checkOutTime ? new Date(record.checkOutTime) : null;
-  
-            let duration:number;
+            
+            let duration: number;
             if (checkOutTime) {
               duration = checkOutTime.getTime() - checkInTime.getTime();
-            } else (this.isCheckedIn) 
-            {
-              // Calculate ongoing work duration
+            } else if (this.isCheckedIn) {
               duration = new Date().getTime() - checkInTime.getTime();
+            } else {
+              duration = 0; // Default when no check-out
             }
   
             // Adjust duration for paused time
@@ -181,6 +182,12 @@ isCheckedIn: boolean = false;
                 duration -= (pauseEnd.getTime() - pauseStart.getTime());
               });
             }
+  
+            // Store ongoing duration as elapsedTime if still checked in
+            if (!checkOutTime && this.isCheckedIn) {
+              this.elapsedTime = duration;
+            }
+  
             return {
               date: checkInTime.toISOString().split('T')[0],
               checkInTime,
@@ -188,19 +195,21 @@ isCheckedIn: boolean = false;
               duration
             };
           });
+          
   
           this.filterWorkRecordsByMonth();
+          this.calculateTodayWorkingHours();
         } else {
           this.workRecords = [];
           this.filteredWorkRecords = [];
           this.totalWorkingHours = 0;
+          this.todayWorkingHours = 0;
         }
       },
       (error) => console.error("Error fetching history:", error)
     );
   }
   
-
   formatTime(milliseconds: number): string {
     let totalSeconds = Math.floor(milliseconds / 1000);
     let hours = Math.floor(totalSeconds / 3600);
@@ -224,6 +233,15 @@ isCheckedIn: boolean = false;
 
   calculateTotalWorkingHours() {
     this.totalWorkingHours = this.filteredWorkRecords.reduce((total, record) => {
+      return total + record.duration;
+    }, 0);
+  }
+
+  calculateTodayWorkingHours() {
+    const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+    const todayRecords = this.workRecords.filter(record => record.date === today);
+  
+    this.todayWorkingHours = todayRecords.reduce((total, record) => {
       return total + record.duration;
     }, 0);
   }
