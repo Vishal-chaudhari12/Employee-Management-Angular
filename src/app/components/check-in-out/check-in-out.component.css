@@ -1,6 +1,26 @@
+/* Container Styling */
 .container {
   max-width: 1200px;
   margin: auto;
+  display: flex;
+  /* flex-wrap: wrap; */
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* Sidebar */
+.col-md-3 {
+  flex: 1;
+  min-width: 300px;
+}
+
+/* Main Content */
+.left-box, .right-box {
+  width: 50%;
+  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 /* Work History Section */
@@ -51,19 +71,30 @@
   transform: scale(0.9);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .col-lg-6 {
-    width: 100%;
-  }
+/* Table Styling */
+.table-responsive {
+  overflow-x: auto;
+}
 
-  .button-group {
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .container {
     flex-direction: column;
     align-items: center;
   }
 
-  .work-history .d-flex {
-    flex-direction: column;
-    gap: 10px;
+  .left-box, .right-box {
+    width: 100%;
   }
 }

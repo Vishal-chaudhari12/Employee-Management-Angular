@@ -1,106 +1,134 @@
-/* ==============================
-   🌟 Global Styles
-================================= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Roboto", sans-serif;
-}
-
+/* General Layout */
 body {
-  background-color: #f4f7fc; /* Light background */
+  font-family: 'Inter', sans-serif;
 }
 
-/* ==============================
-   🌟 Dashboard Layout
-================================= */
 .dashboard-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
-  /* background: linear-gradient(to right, #3498db, #8e44ad); Modern gradient */
+  background: #f4f7fc;
+  font-family: 'Poppins', sans-serif;
 }
 
-.dashboard-main {
-  width: 90%;
-  max-width: 900px;
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  background-color: #000000;
+  color: white;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar .logo {
   text-align: center;
-  transition: all 0.3s ease-in-out;
-}
-
-.dashboard-main:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-}
-
-/* ==============================
-   🌟 Header
-================================= */
-.dashboard-header {
-  margin-bottom: 20px;
-}
-
-.dashboard-header h2 {
-  font-size: 24px;
-  color: #333;
+  font-size: 22px;
   font-weight: bold;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* ==============================
-   🌟 Dashboard Content (Cards)
-================================= */
+.sidebar .nav-links {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.sidebar .nav-links li {
+  padding: 12px 15px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.3s;
+  border-radius: 5px;
+}
+
+.sidebar .nav-links li i {
+  margin-right: 10px;
+}
+
+.sidebar .nav-links li a {
+  text-decoration: none;
+  color: white;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.sidebar .nav-links li:hover,
+.sidebar .nav-links li a.active {
+  background-color: #007bff;
+}
+
+/* Main Content */
+.dashboard-main {
+  margin-left: 260px; /* Align with sidebar */
+  flex-grow: 1;
+  padding: 30px;
+}
+
+.dashboard-header {
+  text-align: center;
+  background: #ffffff;
+  color: rgb(27, 17, 17);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .dashboard-content {
   display: flex;
   justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
+  margin-top: 30px;
 }
 
 .card {
-  width: 250px;
+  width: 280px;
   height: 180px;
   background: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  text-decoration: none;
-  color: #2c3e50;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
+  transition: transform 0.3s, background 0.3s;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  background: #007bff;
+  color: white;
 }
 
 .card i {
   font-size: 40px;
-  color: #3498db;
   margin-bottom: 10px;
 }
 
 .card h3 {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
+  font-size: 18px;
+  font-weight: 600;
 }
 
-/* ==============================
-   🌟 Responsive Design
-================================= */
 @media (max-width: 768px) {
+  .sidebar {
+    width: 220px;
+  }
+
+  .dashboard-main {
+    margin-left: 220px;
+    padding: 20px;
+  }
+
   .dashboard-content {
     flex-direction: column;
     align-items: center;
@@ -108,5 +136,6 @@ body {
 
   .card {
     width: 100%;
+    max-width: 320px;
   }
 }
