@@ -28,8 +28,8 @@ app-side-bar {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #5b76fd, #818cf8);
-  color: white;
+  background: white;
+  color: black;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(129, 140, 248, 0.2);
@@ -60,20 +60,21 @@ app-side-bar {
   padding: 20px;
   border-radius: 15px;
   background: white;
+  max-width: 200px;
   box-shadow: 0 4px 15px rgba(129, 140, 248, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: none;
 }
 
 .stat-card:first-child {
-  background: linear-gradient(135deg, #5b76fd, #818cf8);
-  color: white;
+  background: linear-gradient(135deg, #8bc7f9, #818cf8);
+  color: rgb(0, 0, 0);
   box-shadow: 0 4px 15px rgba(129, 140, 248, 0.2);
 }
 
 .stat-card:last-child {
-  background: linear-gradient(135deg, #5b76fd, #818cf8);
-  color: white;
+  background: linear-gradient(135deg, #8bc7f9, #818cf8);
+  color: rgb(0, 0, 0);
   box-shadow: 0 4px 15px rgba(129, 140, 248, 0.2);
 }
 
@@ -137,7 +138,7 @@ app-side-bar {
   align-items: center;
   justify-content: center;
   border: none;
-  color: white;
+  color: rgb(0, 0, 0);
   background: linear-gradient(135deg, #a5b4fc, #818cf8);
   box-shadow: 0 4px 15px rgba(129, 140, 248, 0.2);
 }

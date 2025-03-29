@@ -42,9 +42,7 @@
 </mat-toolbar>
 
 <aside *ngIf="authService.isLoggedIn" class="sidebar" [class.open]="isSidebarOpen">
-  <div class="logo">
-    <h2 *ngIf="isSidebarOpen">Profile</h2>
-  </div>
+
   <ul class="nav-links">
     <ng-container *ngIf="authService.isAdmin; else employeeLinks">
       <li>
@@ -95,4 +93,6 @@
     </ng-template>
   </ul>
 </aside>
+
+<div class="sidebar-backdrop" [class.visible]="isSidebarOpen" (click)="closeSidebar()" *ngIf="isSidebarOpen"></div>
 <div class="spacer"></div>

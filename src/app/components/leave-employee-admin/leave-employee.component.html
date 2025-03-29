@@ -12,3 +12,85 @@
     <mat-spinner></mat-spinner>
   </div>
 
+  <!-- Leave Requests Table -->
+  <div *ngIf="!loading">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let request">{{ request.email }}</td>
+      </ng-container>
+
+      <!-- Reason Column -->
+      <ng-container matColumnDef="reason">
+        <th mat-header-cell *matHeaderCellDef>Reason</th>
+        <td mat-cell *matCellDef="let request">{{ request.reason }}</td>
+      </ng-container>
+
+      <!-- From Date Column -->
+      <ng-container matColumnDef="fromDate">
+        <th mat-header-cell *matHeaderCellDef>From Date</th>
+        <td mat-cell *matCellDef="let request">{{ request.fromDate | date }}</td>
+      </ng-container>
+
+      <!-- To Date Column -->
+      <ng-container matColumnDef="toDate">
+        <th mat-header-cell *matHeaderCellDef>To Date</th>
+        <td mat-cell *matCellDef="let request">{{ request.toDate | date }}</td>
+      </ng-container>
+
+      <!-- Leave Type Column -->
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef>Type</th>
+        <td mat-cell *matCellDef="let request">{{ request.type }}</td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let request">
+          <span [ngClass]="{
+            'status-pending': request.status === 'pending',
+            'status-approved': request.status === 'approved',
+            'status-rejected': request.status === 'rejected'
+          }">
+            {{ request.status | uppercase }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column (Only for Admins) -->
+      <ng-container *ngIf="isAdmin" matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let request">
+          <button mat-button color="primary" (click)="confirmAction(request._id, 'approved')" *ngIf="request.status === 'pending'">
+             Approve
+          </button>
+          <button mat-button color="warn" (click)="confirmAction(request._id, 'rejected')" *ngIf="request.status === 'pending'">
+             Reject
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Header & Row Definitions -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <!-- No Data Message -->
+      <tr class="no-data" *matNoDataRow>
+        <td colspan="7">No leave requests found.</td>
+      </tr>
+
+    </table>
+
+    <!-- Pagination -->
+    <mat-paginator [pageSize]="5" showFirstLastButtons></mat-paginator>
+  </div>
+
+  <!-- Export Button -->
+  <button mat-raised-button color="accent" (click)="exportToExcel()" class="export-btn">
+    📥 Export to Excel
+  </button>
+
+</mat-card>

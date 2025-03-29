@@ -1,10 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, HostListener } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { AuthService } from '../../services/auth.service';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -17,15 +17,15 @@ export class HeaderComponent {
   authService = inject(AuthService);
   isSidebarOpen = false;  // Sidebar state
 
-  constructor( private location: Location) {}
+  @HostListener('document:keydown.escape')
+  onEscapePress() {
+    this.closeSidebar();
+  }
 
   async logout(): Promise<void> {
     try {
       await this.authService.logout();
-      this.router.navigate(['/login']).then(() => {
-        // Replace history state to prevent back navigation
-        this.location.replaceState('/login');
-      });
+      await this.router.navigate(['/login']);
     } catch (error) {
       console.error('Logout failed:', error);
     }
@@ -33,5 +33,11 @@ export class HeaderComponent {
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  closeSidebar() {
+    if (this.isSidebarOpen) {
+      this.isSidebarOpen = false;
+    }
   }
 }
