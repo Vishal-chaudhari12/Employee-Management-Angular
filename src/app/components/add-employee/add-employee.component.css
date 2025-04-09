@@ -1,109 +1,193 @@
-/* Center and emphasize the header
-h5 {
-  font-weight: bold;
+/* Page Layout */
+.page-container {
+  display: flex;
+  min-height: 100vh;
+  background: #f8fafc;
 }
 
-
-label {
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-  display: block;
+.main-content {
+  flex: 1;
+  padding: 30px 30px 30px 290px;
+  width: calc(100% - 260px);
+  margin-left: auto;
 }
 
-.container {
-  max-width: 800px;
-  margin-bottom: 20%;
-} */
+/* Form Header */
+.form-header {
+  margin-bottom: 30px;
+}
 
-
-
-h5 {
-  font-weight: 600;
-  text-align: center;
-  color: #333;
-  margin-bottom: 20px;
+.form-header h2 {
   font-size: 24px;
-}
-
-
-label {
-  font-weight: 500;
+  font-weight: 600;
+  color: #1a1a1a;
   margin-bottom: 8px;
-  display: block;
-  color: #555;
 }
 
+.form-header .subtitle {
+  color: #666;
+  font-size: 14px;
+  margin: 0;
+}
 
-input[type="text"],
-input[type="email"],
-input[type="number"],
-input[type="date"],
-input[type="file"] {
+/* Form Container */
+.form-container {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: 35px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid #eee;
+}
+
+.form-section:last-child {
+  border-bottom: none;
+  margin-bottom: 25px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 20px;
+}
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #4a5568;
+  margin-bottom: 8px;
+}
+
+.form-control {
   width: 100%;
-  padding: 12px;
+  padding: 10px 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1a1a1a;
+  background-color: #fff;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
-  font-size: 16px;
   transition: all 0.3s ease;
-  background-color: white;
 }
 
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="number"]:focus,
-input[type="date"]:focus,
-input[type="file"]:focus {
-  border-color: #818cf8;
+.form-control:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
   outline: none;
-  box-shadow: 0 4px 15px rgba(129, 140, 248, 0.2);
 }
 
-
-.container {
-  max-width: 800px;
-  background: white;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(129, 140, 248, 0.1);
-  margin: 50px auto;
+.form-control::placeholder {
+  color: #a0aec0;
 }
 
+/* File Input Styling */
+.file-input-container {
+  position: relative;
+}
 
-.btn-primary {
-  background: linear-gradient(135deg, #a5b4fc, #818cf8);
-  border: none;
-  padding: 12px 25px;
-  font-size: 16px;
+.file-input-container input[type="file"] {
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.btn {
+  padding: 10px 24px;
+  font-size: 14px;
   font-weight: 500;
   border-radius: 8px;
   transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: #6366f1;
+  border: none;
   color: white;
-  box-shadow: 0 4px 15px rgba(129, 140, 248, 0.2);
-  width: 100%;
-  margin-top: 20px;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(129, 140, 248, 0.3);
-  background: linear-gradient(135deg, #818cf8, #6366f1);
+  background: #4f46e5;
+  transform: translateY(-1px);
 }
 
-.btn-primary:active {
-  transform: translateY(1px);
-  box-shadow: 0 2px 10px rgba(129, 140, 248, 0.2);
+.btn-secondary {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  color: #4a5568;
 }
 
+.btn-secondary:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+/* Row Spacing */
+.row {
+  margin-bottom: 15px;
+}
+
+.row:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .main-content {
+    padding: 30px 30px 30px 250px;
+    width: calc(100% - 220px);
+  }
+}
 
 @media (max-width: 768px) {
-  .container {
+  .main-content {
+    padding: 20px 20px 20px 100px;
+    width: calc(100% - 80px);
+  }
+
+  .form-container {
     padding: 20px;
-    margin: 20px;
   }
-  
-  h5 {
-    font-size: 20px;
+
+  .form-actions {
+    flex-direction: column;
   }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+/* Input Type Number - Remove Arrows */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 

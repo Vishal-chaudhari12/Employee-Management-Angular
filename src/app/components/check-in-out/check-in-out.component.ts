@@ -3,13 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { saveAs } from 'file-saver';
+import { Router } from '@angular/router';
 
 import { CheckInOutService } from '../../services/check-in-out.service';
-
 import { AuthService } from '../../services/auth.service';
 import { environment } from '../../../environments/environment.prod';
-import { RouterLink } from '@angular/router';
-import { SideBarComponent } from "../side-bar/side-bar.component";
+import { SideBarComponent } from '../side-bar/side-bar.component';
 import Swal from 'sweetalert2';
 
 interface WorkRecord {
@@ -21,12 +20,14 @@ interface WorkRecord {
 
 @Component({
   selector: 'app-check-in-out',
+  standalone: true,
   imports: [CommonModule, FormsModule, SideBarComponent],
   templateUrl: './check-in-out.component.html',
   styleUrls: ['./check-in-out.component.css']
 })
-export class CheckInOutComponent{
-isCheckedIn: boolean = false;
+export class CheckInOutComponent implements OnInit {
+  isLoggedIn: boolean = false;
+  isCheckedIn: boolean = false;
   lastCheckIn: Date | null = null;
   lastCheckOut: Date | null = null;
   elapsedTime: number = 0;
@@ -35,6 +36,7 @@ isCheckedIn: boolean = false;
   workRecords: WorkRecord[] = [];
   showTotalHoursView: boolean = false;
   totalWorkingHours: number = 0;
+  todayWorkingHours: number = 0;
   selectedMonth: string = '';
   months: string[] = [];
   filteredWorkRecords: WorkRecord[] = [];
@@ -43,15 +45,20 @@ isCheckedIn: boolean = false;
   constructor(
     @Inject(AuthService) public authService: AuthService,
     private checkInOutService: CheckInOutService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {
+    this.isLoggedIn = this.authService.isLoggedIn;
+    if (!this.isLoggedIn) {
+      this.router.navigate(['/login']);
+    }
     const today = new Date();
     for (let i = 0; i < 12; i++) {
       const monthDate = new Date(today.getFullYear(), today.getMonth() - i, 1);
       const monthYearStr = monthDate.toLocaleString('default', { month: 'long', year: 'numeric' });
       this.months.push(monthYearStr);
     }
-    this.selectedMonth = this.months[0]; // Set default to current month
+    this.selectedMonth = this.months[0];
   }
 
   ngOnInit() {
@@ -158,22 +165,21 @@ isCheckedIn: boolean = false;
   
     this.http.get(`${environment.apiUrl}/api/check-in-out/history/${this.employeeId}`).subscribe(
       (res: any) => {
-        console.log("History API Response:", res); // Debugging
+        console.log("History API Response:", res);
         if (res.history) {
           this.workRecords = res.history.map((record: any) => {
             const checkInTime = new Date(record.checkInTime);
             const checkOutTime = record.checkOutTime ? new Date(record.checkOutTime) : null;
-  
-            let duration:number;
+            
+            let duration: number;
             if (checkOutTime) {
               duration = checkOutTime.getTime() - checkInTime.getTime();
-            } else (this.isCheckedIn) 
-            {
-              // Calculate ongoing work duration
+            } else if (this.isCheckedIn) {
               duration = new Date().getTime() - checkInTime.getTime();
+            } else {
+              duration = 0;
             }
   
-            // Adjust duration for paused time
             if (record.pauseTimes && record.pauseTimes.length > 0) {
               record.pauseTimes.forEach((pause: any) => {
                 const pauseStart = new Date(pause.start);
@@ -181,6 +187,11 @@ isCheckedIn: boolean = false;
                 duration -= (pauseEnd.getTime() - pauseStart.getTime());
               });
             }
+  
+            if (!checkOutTime && this.isCheckedIn) {
+              this.elapsedTime = duration;
+            }
+  
             return {
               date: checkInTime.toISOString().split('T')[0],
               checkInTime,
@@ -188,19 +199,20 @@ isCheckedIn: boolean = false;
               duration
             };
           });
-  
+          
           this.filterWorkRecordsByMonth();
+          this.calculateTodayWorkingHours();
         } else {
           this.workRecords = [];
           this.filteredWorkRecords = [];
           this.totalWorkingHours = 0;
+          this.todayWorkingHours = 0;
         }
       },
       (error) => console.error("Error fetching history:", error)
     );
   }
   
-
   formatTime(milliseconds: number): string {
     let totalSeconds = Math.floor(milliseconds / 1000);
     let hours = Math.floor(totalSeconds / 3600);
@@ -224,6 +236,15 @@ isCheckedIn: boolean = false;
 
   calculateTotalWorkingHours() {
     this.totalWorkingHours = this.filteredWorkRecords.reduce((total, record) => {
+      return total + record.duration;
+    }, 0);
+  }
+
+  calculateTodayWorkingHours() {
+    const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+    const todayRecords = this.workRecords.filter(record => record.date === today);
+  
+    this.todayWorkingHours = todayRecords.reduce((total, record) => {
       return total + record.duration;
     }, 0);
   }
@@ -252,10 +273,10 @@ isCheckedIn: boolean = false;
     }
   
     const csvRows: string[][] = [];
-    csvRows.push(['Date', 'Check-In Time', 'Check-Out Time', 'Duration (HH:MM:SS)']); // Header row
+    csvRows.push(['Date', 'Check-In Time', 'Check-Out Time', 'Duration (HH:MM:SS)']);
   
     this.filteredWorkRecords.forEach(record => {
-      const formattedDate = new Date(record.checkInTime).toISOString().split('T')[0]; // Ensure proper date formatting
+      const formattedDate = new Date(record.checkInTime).toISOString().split('T')[0];
       const formattedCheckInTime = record.checkInTime ? new Date(record.checkInTime).toLocaleString() : 'N/A';
       const formattedCheckOutTime = record.checkOutTime ? new Date(record.checkOutTime).toLocaleString() : 'Pending';
       const formattedDuration = record.checkOutTime ? this.formatTime(record.duration) : 'In Progress';

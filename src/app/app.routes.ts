@@ -119,6 +119,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { OtpVerificationComponent } from './components/otp-verification/otp-verification.component';
 
+
 export const routes: Routes = [
     {
         path: '',
@@ -208,5 +209,6 @@ export const routes: Routes = [
     {
         path:'otp-verification',
         component:OtpVerificationComponent,
-    }
+    },
+   
 ];
