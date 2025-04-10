@@ -11,7 +11,7 @@ import { SideBarComponent } from '../side-bar/side-bar.component';
 
 @Component({
   selector: 'app-add-employee',
-  imports: [FormsModule, CommonModule, SideBarComponent],
+  imports: [FormsModule, CommonModule],
   templateUrl: './add-employee.component.html',
   styleUrls: ['./add-employee.component.css']
 })

@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SideBarComponent } from "../side-bar/side-bar.component";
 import { MatCardModule } from '@angular/material/card';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -27,7 +28,7 @@ export class AdminDashboardComponent implements OnInit {
 
 
   fetchLeaveRequests() {
-    this.http.get<any[]>('http://localhost:3000/api/leave/all').subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/api/leave/all`).subscribe({
       next: (data) => {
         console.log('Fetched leave requests:', data); // Debugging
         this.allLeaveRequests = data;
@@ -72,7 +73,7 @@ export class AdminDashboardComponent implements OnInit {
       'Authorization': `Bearer ${localStorage.getItem('authToken')}`
     });
 
-    this.http.get<any[]>('http://localhost:3000/employee', { headers }).subscribe(
+    this.http.get<any[]>(`${environment.apiUrl}/employee`, { headers }).subscribe(
       (result) => {
         console.log("Employee data:", result);
         this.employeeList = result;
@@ -80,8 +81,8 @@ export class AdminDashboardComponent implements OnInit {
           ...employee, 
           
           marksheetUrl: employee.marksheet ? 
-          `http://localhost:3000/uploads/${employee.marksheet}` : null,
-          resumeUrl: employee.resume ? `http://localhost:3000/uploads/${employee.resume}` : null
+          `${environment.apiUrl}/uploads/${employee.marksheet}` : null,
+          resumeUrl: employee.resume ? `${environment.apiUrl}/uploads/${employee.resume}` : null
         }));
       },
       (error) => {

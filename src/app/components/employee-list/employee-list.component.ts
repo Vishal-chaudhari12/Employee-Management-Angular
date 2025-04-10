@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-employee-list',
@@ -24,7 +25,7 @@ export class EmployeeListComponent {
       'Authorization': `Bearer ${localStorage.getItem('authToken')}`
     });
 
-    this.http.get<any[]>('http://localhost:3000/employee', { headers }).subscribe(
+    this.http.get<any[]>(`${environment.apiUrl}/employee`, { headers }).subscribe(
       (result) => {
         console.log("Employee data:", result);
         this.employeeList = result.map(employee => ({

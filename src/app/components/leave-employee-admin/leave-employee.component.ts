@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { SideBarComponent } from '../side-bar/side-bar.component';
+import { environment } from '../../../environments/environment.prod';
 
 interface LeaveRequest {
   _id: string;
@@ -63,8 +64,8 @@ export class LeaveComponent implements OnInit {
     const userEmail = this.authService.userEmail;
 
     const apiUrl = this.isAdmin
-      ? 'http://localhost:3000/api/leave/all'
-      :` http://localhost:3000/api/leave/employee/${userEmail}`;
+      ? `${environment.apiUrl}/api/leave/all`
+      :` ${environment.apiUrl}/api/leave/employee/${userEmail}`;
 
     this.http.get<LeaveRequest[]>(apiUrl).subscribe(
       (data) => {
