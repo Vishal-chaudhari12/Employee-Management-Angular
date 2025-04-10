@@ -99,17 +99,26 @@ export class LeaveComponent implements OnInit {
   }
 
   updateLeaveStatus(leaveId: string, status: string): void {
-    this.http.put(`http://localhost:3000/api/leave/update/${leaveId}`, { status }).subscribe(
-      () => {
-        this.snackBar.open(`Leave marked as ${status}`, 'Close', { duration: 3000 });
-        this.getLeaveRequests(); // Refresh data
-      },
-      (error) => {
-        console.error('Error updating leave:', error);
-        Swal.fire('Error', 'Failed to update leave status', 'error');
+  this.http.put(`http://localhost:3000/api/leave/update/${leaveId}`, { status }).subscribe(
+    (response: any) => {
+      this.snackBar.open(`Leave marked as ${status}`, 'Close', { duration: 3000 });
+
+      // Find and update the leave status in the local data
+      const leaveIndex = this.dataSource.data.findIndex((leave) => leave._id === leaveId);
+      if (leaveIndex !== -1) {
+        this.dataSource.data[leaveIndex].status = status;
       }
-    );
-  }
+      this.dataSource._updateChangeSubscription(); // Refresh the table
+
+      this.getLeaveRequests(); // Fetch updated data
+    },
+    (error) => {
+      console.error('Error updating leave:', error);
+      Swal.fire('Error', 'Failed to update leave status', 'error');
+    }
+  );
+}
+
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();

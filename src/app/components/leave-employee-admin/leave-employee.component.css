@@ -90,52 +90,65 @@ mat-card {
     color: #c62828;
   }
 
-  button[mat-button] {
-    font-size: 0.88rem;
-    padding: 6px 14px;
-    border-radius: 6px;
-    margin-right: 0.5rem;
-    font-weight: 500;
-    text-transform: capitalize;
-    transition: background-color 0.3s ease, box-shadow 0.2s ease;
+/* Actions Buttons */
+button {
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
 
-    &.approve-btn {
-      background-color: #4caf50;
-      color: #fff;
+button[color="primary"] {
+  background: #28a745;
+  color: white;
+}
 
-      &:hover {
-        background-color: #43a047;
-      }
-    }
+button[color="warn"] {
+  background: #dc3545;
+  color: white;
+}
 
-    &.reject-btn {
-      background-color: #f44336;
-      color: #fff;
+button:hover {
+  opacity: 0.8;
+}
 
-      &:hover {
-        background-color: #e53935;
-      }
-    }
+/* No Data Message */
+.no-data {
+  text-align: center;
+  font-style: italic;
+  color: #757575;
+}
+
+/* Export Button */
+.export-btn {
+  display: block;
+  margin: 20px auto;
+  background: #007BFF;
+  color: white;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.export-btn:hover {
+  background: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  mat-card {
+    padding: 15px;
   }
-
-  .export-btn {
-    background-color: #1976d2;
-    color: #fff;
-    margin-top: 2rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-    padding: 0.6rem 1.5rem;
-    border-radius: 8px;
-    float: right;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: #1565c0;
-    }
+  
+  th, td {
+    font-size: 14px;
+    padding: 8px;
   }
-
-  mat-paginator {
-    margin-top: 2rem;
+  
+  button {
+    font-size: 12px;
+    padding: 4px 10px;
   }
+}
 }

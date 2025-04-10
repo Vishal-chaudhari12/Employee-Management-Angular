@@ -92,29 +92,22 @@
   color: #a0aec0;
 }
 
-/* File Input Styling */
-.file-input-container {
-  position: relative;
+
+.container {
+  max-width: 800px;
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(129, 140, 248, 0.1);
+  margin: 50px auto;
 }
 
-.file-input-container input[type="file"] {
-  padding: 8px 12px;
-  font-size: 14px;
-}
 
-/* Form Actions */
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 15px;
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 1px solid #eee;
-}
-
-.btn {
-  padding: 10px 24px;
-  font-size: 14px;
+.btn-primary {
+  background: linear-gradient(135deg, #a5b4fc, #818cf8);
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
   font-weight: 500;
   border-radius: 8px;
   transition: all 0.3s ease;
