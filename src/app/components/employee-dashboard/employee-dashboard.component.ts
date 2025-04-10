@@ -29,6 +29,9 @@ export class EmployeeDashboardComponent {
 
  employeeName: any;
 
+  totalLeaves = 20; // Total yearly leaves
+  remainingLeaves = 20; // Remaining leaves
+
   constructor(
     @Inject(AuthService) public authService: AuthService,
 

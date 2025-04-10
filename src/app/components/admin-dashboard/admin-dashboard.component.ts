@@ -11,7 +11,7 @@ import { MatCardModule } from '@angular/material/card';
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css'],
-  imports: [MatIcon, CommonModule, RouterModule, SideBarComponent,MatCardModule]
+  imports: [MatIcon, CommonModule, RouterModule, MatCardModule]
 })
 export class AdminDashboardComponent implements OnInit {
   allLeaveRequests: any[] = [];

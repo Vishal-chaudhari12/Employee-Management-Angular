@@ -1,92 +1,112 @@
-<mat-toolbar class="header">
-  <!-- Left Section -->
+<mat-toolbar color="primary" class="header">
   <div class="left-section">
-    <button class="menu-toggle" (click)="onToggleSidebar()">
-      <i class="fas fa-bars"></i>
-    </button>
-    <div class="brand">
-      <span class="brand-name">EMS Portal</span>
-    </div>
+    <div *ngIf="authService.isLoggedIn" class="toggle-btn" (click)="toggleSidebar()">☰</div>
+    <span class="logo" *ngIf="isSidebarOpen"></span>
   </div>
 
-  <!-- Right Section -->
-  <div class="right-section">
-    <div class="profile-section">
-      <button class="profile-btn" [matMenuTriggerFor]="profileMenu">
-        <span class="user-name">{{ authService.userName }}</span>
-        <div class="profile-avatar">
-          <i class="fas fa-user-circle"></i>
-        </div>
-      </button>
+  <div class="Left-bar">
+    <span *ngIf="!authService.isLoggedIn">Employee Management System</span>
+    <span *ngIf="authService.isLoggedIn">
+      <span *ngIf="authService.isAdmin; else employeeDashboard">Admin Dashboard</span>
+      <ng-template #employeeDashboard>Employee Dashboard</ng-template>
+    </span>
+  </div>
 
-      <mat-menu #profileMenu="matMenu" class="profile-menu">
-        <button mat-menu-item routerLink="/my-profile">
-          <i class="fas fa-user"></i>
-          <span>My Profile</span>
-        </button>
-        <button mat-menu-item (click)="logout()">
-          <i class="fas fa-sign-out-alt"></i>
-          <span>Logout</span>
-        </button>
+  <span class="spacer"></span>
+
+  <nav class="nav-links">
+    <div class="profile">
+      <!-- Profile Avatar with Initial -->
+      <div class="profile-avatar" [matMenuTriggerFor]="profileMenu">
+        {{ authService.userName?.charAt(0) | uppercase }}
+      </div>
+
+      <mat-menu #profileMenu="matMenu">
+        <ng-container *ngIf="authService.isLoggedIn; else guestOptions">
+          <button mat-menu-item routerLink="/admin-profile" *ngIf="authService.isAdmin">
+            {{ authService.userName }}
+          </button>
+          <button mat-menu-item routerLink="/emp-profile" *ngIf="!authService.isAdmin">
+            {{ authService.userName }}
+          </button>
+          <button mat-menu-item (click)="logout()">Logout</button>
+        </ng-container>
+
+        <ng-template #guestOptions>
+          <button mat-menu-item routerLink="/login">Login</button>
+          <button mat-menu-item routerLink="/register">Register</button>
+        </ng-template>
       </mat-menu>
     </div>
-  </div>
+  </nav>
 </mat-toolbar>
 
-<aside class="sidebar" [class.open]="isSidebarOpen">
+<aside *ngIf="authService.isLoggedIn" class="sidebar" [class.open]="isSidebarOpen">
   <ul class="nav-links">
     <ng-container *ngIf="authService.isAdmin; else employeeLinks">
       <li>
-        <a routerLink="/admin-dashboard" routerLinkActive="active">
+        <a routerLink="/admin-dashboard">
           <i class="fas fa-tachometer-alt"></i>
-          <span>Dashboard</span>
+          <span *ngIf="isSidebarOpen">Dashboard</span>
         </a>
       </li>
       <li>
-        <a routerLink="/employee-list" routerLinkActive="active">
-          <i class="fas fa-users"></i>
-          <span>Employees</span>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/add-employee" routerLinkActive="active">
+        <a routerLink="/add-employee">
           <i class="fas fa-user-plus"></i>
-          <span>Add Employee</span>
+          <span *ngIf="isSidebarOpen">Add Employee</span>
         </a>
       </li>
       <li>
-        <a routerLink="/leave-employee" routerLinkActive="active">
+        <a routerLink="/employee-list">
+          <i class="fas fa-user"></i>
+          <span *ngIf="isSidebarOpen">View Employee</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/leave-employee">
           <i class="fas fa-calendar-alt"></i>
-          <span>Leave Management</span>
+          <span *ngIf="isSidebarOpen">Employee Leave Requests</span>
         </a>
       </li>
     </ng-container>
 
     <ng-template #employeeLinks>
       <li>
-        <a routerLink="/employee-dashboard" routerLinkActive="active">
+        <a routerLink="/employee-dashboard">
           <i class="fas fa-tachometer-alt"></i>
-          <span>Dashboard</span>
+          <span *ngIf="isSidebarOpen">Dashboard</span>
         </a>
       </li>
       <li>
-        <a routerLink="/checkIn" routerLinkActive="active">
+        <a routerLink="/checkIn">
           <i class="fas fa-clock"></i>
-          <span>Attendance</span>
+          <span *ngIf="isSidebarOpen">Check-in/Check-out</span>
         </a>
       </li>
       <li>
-        <a routerLink="/employee-leave-form" routerLinkActive="active">
+        <a routerLink="/employee-leave-form">
           <i class="fas fa-calendar-alt"></i>
-          <span>Leave Requests</span>
+          <span *ngIf="isSidebarOpen">Leave Requests</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/add-employee">
+          <i class="fas fa-user-plus"></i>
+          <span *ngIf="isSidebarOpen">Add Employee</span>
         </a>
       </li>
     </ng-template>
   </ul>
 </aside>
 
-<div class="main-content" [class.sidebar-open]="isSidebarOpen">
-  <router-outlet></router-outlet>
+<div
+  class="sidebar-backdrop"
+ 
+  (click)="closeSidebar()"
+  *ngIf="isSidebarOpen"
+></div>
+
+<!-- Scrollable Page Content Starts Below the Fixed Header -->
+<div class="main-content">
+  
 </div>
-
-

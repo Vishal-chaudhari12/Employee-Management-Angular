@@ -21,12 +21,11 @@ interface WorkRecord {
 @Component({
   selector: 'app-check-in-out',
   standalone: true,
-  imports: [CommonModule, FormsModule, SideBarComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './check-in-out.component.html',
   styleUrls: ['./check-in-out.component.css']
 })
 export class CheckInOutComponent implements OnInit {
-  isLoggedIn: boolean = false;
   isCheckedIn: boolean = false;
   lastCheckIn: Date | null = null;
   lastCheckOut: Date | null = null;
@@ -48,10 +47,6 @@ export class CheckInOutComponent implements OnInit {
     private http: HttpClient,
     private router: Router
   ) {
-    this.isLoggedIn = this.authService.isLoggedIn;
-    if (!this.isLoggedIn) {
-      this.router.navigate(['/login']);
-    }
     const today = new Date();
     for (let i = 0; i < 12; i++) {
       const monthDate = new Date(today.getFullYear(), today.getMonth() - i, 1);
