@@ -7,12 +7,13 @@ interface LeaveRequest {
   // Add other properties as needed
 }
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LeaveService {
-  private apiUrl = 'http://localhost:3000'; // Update with your backend URL
+  private apiUrl = `${environment.apiUrl}`; // Update with your backend URL
 
   constructor(private http: HttpClient) {}
 

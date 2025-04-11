@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { environment } from '../../../environments/environment.prod';
 // import { SideBarComponent } from "../side-bar/side-bar.component";
 
 @Component({
@@ -110,7 +111,7 @@ export class EmployeeleaveComponent implements OnInit {
       status: 'pending'
     };
 
-    this.http.post('http://localhost:3000/api/leave', leaveData).subscribe(
+    this.http.post(`${environment.apiUrl}/api/leave`, leaveData).subscribe(
       () => {
         this.snackBar.open('Leave request submitted successfully!', 'Close', { duration: 3000 });
         this.newLeaveRequest = {
@@ -138,7 +139,7 @@ export class EmployeeleaveComponent implements OnInit {
       return;
     }
   
-    this.http.get<any[]>(`http://localhost:3000/api/leave/employee/${this.newLeaveRequest.email}`)
+    this.http.get<any[]>(`${environment.apiUrl}/api/leave/employee/${this.newLeaveRequest.email}`)
       .subscribe(
         (data) => {
           console.log('Leave requests received:', data);

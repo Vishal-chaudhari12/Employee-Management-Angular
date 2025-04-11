@@ -164,11 +164,6 @@
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
   animation: loading 1.5s infinite;
 }
-.checkin-wrapper{
-  margin-left: 240px; /* Space for sidebar */
-  transition: margin-left 0.3s ease;
-  padding: 20px;
-}
 
 @keyframes loading {
   0% {
@@ -221,10 +216,6 @@
 
   .time-display {
     font-size: 1.25rem;
-  }
-  .checkin-wrapper{
-    margin-left: 0;
-    padding: 15px;
   }
 }
 

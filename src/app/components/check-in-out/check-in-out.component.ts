@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { saveAs } from 'file-saver';
-import { Router } from '@angular/router';
 
 import { CheckInOutService } from '../../services/check-in-out.service';
+
 import { AuthService } from '../../services/auth.service';
 import { environment } from '../../../environments/environment.prod';
-import { SideBarComponent } from '../side-bar/side-bar.component';
+import { RouterLink } from '@angular/router';
+import { SideBarComponent } from "../side-bar/side-bar.component";
 import Swal from 'sweetalert2';
 
 interface WorkRecord {
@@ -20,13 +21,12 @@ interface WorkRecord {
 
 @Component({
   selector: 'app-check-in-out',
-  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './check-in-out.component.html',
   styleUrls: ['./check-in-out.component.css']
 })
-export class CheckInOutComponent implements OnInit {
-  isCheckedIn: boolean = false;
+export class CheckInOutComponent{
+isCheckedIn: boolean = false;
   lastCheckIn: Date | null = null;
   lastCheckOut: Date | null = null;
   elapsedTime: number = 0;
@@ -44,8 +44,7 @@ export class CheckInOutComponent implements OnInit {
   constructor(
     @Inject(AuthService) public authService: AuthService,
     private checkInOutService: CheckInOutService,
-    private http: HttpClient,
-    private router: Router
+    private http: HttpClient
   ) {
     const today = new Date();
     for (let i = 0; i < 12; i++) {
@@ -53,7 +52,7 @@ export class CheckInOutComponent implements OnInit {
       const monthYearStr = monthDate.toLocaleString('default', { month: 'long', year: 'numeric' });
       this.months.push(monthYearStr);
     }
-    this.selectedMonth = this.months[0];
+    this.selectedMonth = this.months[0]; // Set default to current month
   }
 
   ngOnInit() {
@@ -160,7 +159,7 @@ export class CheckInOutComponent implements OnInit {
   
     this.http.get(`${environment.apiUrl}/api/check-in-out/history/${this.employeeId}`).subscribe(
       (res: any) => {
-        console.log("History API Response:", res);
+        console.log("History API Response:", res); // Debugging
         if (res.history) {
           this.workRecords = res.history.map((record: any) => {
             const checkInTime = new Date(record.checkInTime);
@@ -172,9 +171,10 @@ export class CheckInOutComponent implements OnInit {
             } else if (this.isCheckedIn) {
               duration = new Date().getTime() - checkInTime.getTime();
             } else {
-              duration = 0;
+              duration = 0; // Default when no check-out
             }
   
+            // Adjust duration for paused time
             if (record.pauseTimes && record.pauseTimes.length > 0) {
               record.pauseTimes.forEach((pause: any) => {
                 const pauseStart = new Date(pause.start);
@@ -183,6 +183,7 @@ export class CheckInOutComponent implements OnInit {
               });
             }
   
+            // Store ongoing duration as elapsedTime if still checked in
             if (!checkOutTime && this.isCheckedIn) {
               this.elapsedTime = duration;
             }
@@ -195,6 +196,7 @@ export class CheckInOutComponent implements OnInit {
             };
           });
           
+  
           this.filterWorkRecordsByMonth();
           this.calculateTodayWorkingHours();
         } else {
@@ -268,10 +270,10 @@ export class CheckInOutComponent implements OnInit {
     }
   
     const csvRows: string[][] = [];
-    csvRows.push(['Date', 'Check-In Time', 'Check-Out Time', 'Duration (HH:MM:SS)']);
+    csvRows.push(['Date', 'Check-In Time', 'Check-Out Time', 'Duration (HH:MM:SS)']); // Header row
   
     this.filteredWorkRecords.forEach(record => {
-      const formattedDate = new Date(record.checkInTime).toISOString().split('T')[0];
+      const formattedDate = new Date(record.checkInTime).toISOString().split('T')[0]; // Ensure proper date formatting
       const formattedCheckInTime = record.checkInTime ? new Date(record.checkInTime).toLocaleString() : 'N/A';
       const formattedCheckOutTime = record.checkOutTime ? new Date(record.checkOutTime).toLocaleString() : 'Pending';
       const formattedDuration = record.checkOutTime ? this.formatTime(record.duration) : 'In Progress';
