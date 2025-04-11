@@ -69,7 +69,7 @@
 
 .sidebar .nav-links li:hover,
 .sidebar .nav-links li a.active {
-  background-color: #007bff;
+  background-color: #589ee8;
 }
 
 /* Section Titles */
@@ -111,7 +111,7 @@
 
 .action-card:hover {
   transform: translateY(-5px);
-  background: #007bff;
+  background: #c8d5e4;
   color: white;
 }
 

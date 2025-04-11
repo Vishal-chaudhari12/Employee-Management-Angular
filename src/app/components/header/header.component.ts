@@ -1,7 +1,7 @@
 import { Component, inject, HostListener } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
@@ -10,25 +10,24 @@ import { CommonModule } from '@angular/common';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
-  imports: [MatToolbarModule, MatIconModule, RouterLink, CommonModule, MatMenuModule]
+  standalone: true,
+  imports: [
+    MatToolbarModule,
+    MatIconModule,
+    RouterLink,
+    CommonModule,
+    MatMenuModule,
+    RouterOutlet
+  ]
 })
 export class HeaderComponent {
   router = inject(Router);
   authService = inject(AuthService);
-  isSidebarOpen = false;  // Sidebar state
+  isSidebarOpen = true;  // Sidebar state
 
   @HostListener('document:keydown.escape')
-  onEscapePress() {
+  onKeydownHandler() {
     this.closeSidebar();
-  }
-
-  async logout(): Promise<void> {
-    try {
-      await this.authService.logout();
-      await this.router.navigate(['/login']);
-    } catch (error) {
-      console.error('Logout failed:', error);
-    }
   }
 
   toggleSidebar() {
@@ -36,9 +35,12 @@ export class HeaderComponent {
   }
 
   closeSidebar() {
-    if (this.isSidebarOpen) {
-      this.isSidebarOpen = false;
-    }
+    this.isSidebarOpen = false;
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }
 
