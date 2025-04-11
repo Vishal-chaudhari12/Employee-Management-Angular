@@ -1,147 +1,166 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Employee Check-In/Out</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-
-<body>
-  <!-- Sidebar -->
-  <div class="col-md-3">
-    <app-side-bar></app-side-bar>
-  </div>
-
-  <div class="container mt-12 ">
-    <!-- left-box -->
-    <div class="left-box">
-      <div >
-        <div class="row">
-          <!-- Current Work Duration Section -->
-          <div class="col-lg-6 col-md-6">
-            <div class="card shadow-lg p-3 text-center">
-              <p class="current-duration">
-                <strong>Current Work Duration:</strong>
-                <span class="time-display">{{ formatTime(elapsedTime) }}</span>
-              </p>
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-6">
-            <div class="card shadow-lg p-3 text-center">
-             <p><strong>Today's Work Duration:</strong> 
-              <span class="time-display">{{ formatTime(todayWorkingHours) }}</span>
-             </p>
-            </div>
-          </div>
-
-          <div class="col-lg-6 col-md-6">
-            <div class="card shadow-lg p-3 text-center">
-              <h3>Total Working Hours for {{ selectedMonth }}</h3>
-              <p class="hours-text">{{ formatTime(totalWorkingHours) }}</p>
-              <button class="btn btn-secondary" (click)="hideTotalHours()">Close</button>
-            </div>
-          </div>
-         
-        </div>
-
-        <!-- Work History Section -->
-        <div class="col-lg-6 col-md-6">
-          <div class="card shadow-lg p-3">
-            <h4 class="text-center">Work History</h4>
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <div class="d-flex align-items-center">
-                <label class="me-2">Select Month:</label>
-                <select class="form-select w-auto" [(ngModel)]="selectedMonth" (change)="onMonthChange(selectedMonth)">
-                  <option *ngFor="let month of months" [value]="month">{{ month }}</option>
-                </select>
-                <div>
-                  <button class="stop-btn" (click)="viewTotalHours()">View Monthly Hours</button>
-                  <button class="stop-btn" (click)="downloadMonthlyRecord()">Download Report</button>
-                </div>
-              </div>
+<!-- Main Container -->
+<main class="checkin-wrapper">
+<div class="container">
+  <!-- Left Box -->
+  <div class="left-box">
+    <div class="row">
+      <!-- Current Work Duration Section -->
+      <div class="col-lg-6 col-md-6">
+        <div class="card">
+          <div class="d-flex flex-column align-items-center">
+            <h5 class="mb-3">Current Work Duration</h5>
+            <div class="time-display" [class.loading]="isCheckedIn">
+              {{ formatTime(elapsedTime) }}
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Timer & Check-in Section -->
-        <div class="row mt-3">
-          <div class="col-lg-6 col-md-6">
-            <div class="card shadow-lg p-3 text-center">
-              <h4>Check In/Out</h4>
-              <p><strong>Name:</strong> {{ authService.userName }}</p>
-
-              <div class="d-flex flex-column align-items-center">
-                <button class="stop-btn" (click)="startStopwatch()" [disabled]="isCheckedIn">
-                  Start Work
-                </button>
-                <button class="stop-btn" (click)="stopStopwatch()" [disabled]="!isCheckedIn">
-                  Stop Work
-                </button>
-                <!-- <button class="stop-btn" (click)="pauseWork()" [disabled]="!isCheckedIn || isPaused">
-                  Pause Work
-                </button>
-                <button class="stop-btn" (click)="resumeWork()" [disabled]="!isCheckedIn || !isPaused">
-                  Resume Work
-                </button> -->
-              </div>
-
-              <div class="mt-3">
-                <p *ngIf="lastCheckIn"><strong>Last Check-In:</strong> {{ lastCheckIn | date: 'short' }}</p>
-                <p *ngIf="lastCheckOut"><strong>Last Check-Out:</strong> {{ lastCheckOut | date: 'short' }}</p>
-              </div>
+      <!-- Today's Work Duration Section -->
+      <div class="col-lg-6 col-md-6">
+        <div class="card">
+          <div class="d-flex flex-column align-items-center">
+            <h5 class="mb-3">Today's Work Duration</h5>
+            <div class="time-display">
+              {{ formatTime(todayWorkingHours) }}
             </div>
           </div>
+        </div>
+      </div>
 
-          <!-- Total Hours View -->
-          <div *ngIf="showTotalHoursView" class="row mt-3">
-            <div class="col-md-6 offset-md-3">
+      <!-- Monthly Hours Section -->
+      <div class="col-lg-6 col-md-6">
+        <div class="card">
+          <div class="d-flex flex-column align-items-center">
+            <h5 class="mb-3">Total Hours for {{ selectedMonth }}</h5>
+            <div class="time-display">
+              {{ formatTime(totalWorkingHours) }}
+            </div>
+            <button class="stop-btn mt-3" (click)="hideTotalHours()">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Check In/Out Section -->
+      <div class="col-lg-6 col-md-6">
+        <div class="card">
+          <div class="d-flex flex-column align-items-center">
+            <h5 class="mb-3">Check In/Out</h5>
+            <div class="user-info mb-4">
+              <i class="fas fa-user-circle"></i>
+              <span class="ms-2">{{ authService.userName }}</span>
+            </div>
+
+            <div class="d-flex flex-column align-items-center w-100">
+              <button 
+                class="stop-btn mb-3" 
+                (click)="startStopwatch()" 
+                [disabled]="isCheckedIn"
+                [class.active]="isCheckedIn">
+                <i class="fas fa-play me-2"></i>
+                Start Work
+              </button>
               
+              <button 
+                class="stop-btn" 
+                (click)="stopStopwatch()" 
+                [disabled]="!isCheckedIn"
+                [class.active]="!isCheckedIn">
+                <i class="fas fa-stop me-2"></i>
+                Stop Work
+              </button>
+            </div>
+
+            <!-- <div class="mt-4 w-100">
+              <div class="check-in-info" *ngIf="lastCheckIn">
+                <i class="fas fa-sign-in-alt me-2"></i>
+                <span>Last Check-In: {{ lastCheckIn | date: 'short' }}</span>
+              </div>
+              <div class="check-out-info" *ngIf="lastCheckOut">
+                <i class="fas fa-sign-out-alt me-2"></i>
+                <span>Last Check-Out: {{ lastCheckOut | date: 'short' }}</span>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Work History Controls -->
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="d-flex flex-column align-items-center">
+            <h5 class="mb-4">Work History</h5>
+            <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
+              <div class="month-selector">
+                <label class="me-2">Select Month:</label>
+                <select 
+                  class="form-select" 
+                  [(ngModel)]="selectedMonth" 
+                  (change)="onMonthChange(selectedMonth)">
+                  <option *ngFor="let month of months" [value]="month">
+                    {{ month }}
+                  </option>
+                </select>
+              </div>
+              
+              <div class="d-flex gap-2">
+                <button class="stop-btn" (click)="viewTotalHours()">
+                  <i class="fas fa-chart-bar me-2"></i>
+                  View Monthly Hours
+                </button>
+                <button class="stop-btn" (click)="downloadMonthlyRecord()">
+                  <i class="fas fa-download me-2"></i>
+                  Download Report
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
-
-     <!-- right-box -->
-    <div class="right-box">
-      <!-- Work History Table -->
-      <div class="col-lg-6 col-md-12">
-        <div class="card shadow-lg p-6">
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead class="table-primary">
-                <tr>
-                  <th>Date</th>
-                  <th>Check-In</th>
-                  <th>Check-Out</th>
-                  <th>Duration</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let record of filteredWorkRecords">
-                  <td>{{ record.date | date:'shortDate' }}</td>
-                  <td>{{ record.checkInTime | date:'shortTime' }}</td>
-                  <td>{{ record.checkOutTime ? (record.checkOutTime | date:'shortTime') : 'Pending' }}</td>
-                  <td>{{ record.checkOutTime ? formatTime(record.duration) : formatTime(elapsedTime) }}</td>
-
-                </tr>
-                <tr *ngIf="filteredWorkRecords.length === 0">
-                  <td colspan="4" class="text-center">No records found for the selected month.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
   </div>
 
-</body>
-
-</html>
+  <!-- Right Box - Work History Table -->
+  <div class="right-box">
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Check-In</th>
+              <th>Check-Out</th>
+              <th>Duration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let record of filteredWorkRecords">
+              <td>{{ record.date | date:'shortDate' }}</td>
+              <td>
+                <i class="fas fa-sign-in-alt me-2"></i>
+                {{ record.checkInTime | date:'shortTime' }}
+              </td>
+              <td>
+                <i class="fas fa-sign-out-alt me-2"></i>
+                {{ record.checkOutTime ? (record.checkOutTime | date:'shortTime') : 'Pending' }}
+              </td>
+              <td>
+                <i class="fas fa-clock me-2"></i>
+                {{ record.checkOutTime ? formatTime(record.duration) : formatTime(elapsedTime) }}
+              </td>
+            </tr>
+            <tr *ngIf="filteredWorkRecords.length === 0">
+              <td colspan="4" class="text-center py-4">
+                <i class="fas fa-info-circle me-2"></i>
+                No records found for the selected month.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</main>

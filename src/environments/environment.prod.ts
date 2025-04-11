@@ -1,3 +1,3 @@
 export const environment = {
-    apiUrl:"http://localhost:3000"
+    apiUrl:"https://employee-api-test-73lq.onrender.com"
 };

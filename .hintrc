@@ -29,6 +29,7 @@
         "list": "off",
         "listitem": "off"
       }
-    ]
+    ],
+    "meta-viewport": "off"
   }
 }
