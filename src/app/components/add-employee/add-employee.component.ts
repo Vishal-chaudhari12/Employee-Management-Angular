@@ -42,7 +42,7 @@ export class AddEmployeeComponent {
           showConfirmButton: false
         }).then(() => {
           // Redirect to the admin dashboard after alert closes
-          this.router.navigate(['/admin-dashboard']);
+          this.router.navigate(['/employee-dashboard']);
         });
       },
       (error) => {

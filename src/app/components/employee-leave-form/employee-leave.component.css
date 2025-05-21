@@ -44,7 +44,7 @@ body {
 }
 
 .leave-wrapper {
-  margin-left: 240px; /* Space for sidebar */
+  margin-left: 150px; /* Space for sidebar */
   transition: margin-left 0.3s ease;
   padding: 20px;
 }

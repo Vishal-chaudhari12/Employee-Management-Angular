@@ -7,9 +7,9 @@
 
 .main-content {
   flex: 1;
-  padding: 30px 30px 30px 290px;
   width: calc(100% - 260px);
-  margin-left: auto;
+  margin-left: 10%;
+  margin-top: 3%;
 }
 
 /* Form Header */

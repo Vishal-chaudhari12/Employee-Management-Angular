@@ -8,9 +8,9 @@
 
 .dashboard-main {
   flex-grow: 1;
-  padding: 30px 30px 30px 290px;
+ 
   width: calc(100% - 260px);
-  margin-left: auto;
+  margin-left: 5%;
 }
 
 /* Header Section */
@@ -26,6 +26,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-left: 30%;
 }
 
 .welcome-section h2 {
